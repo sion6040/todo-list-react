@@ -4,14 +4,7 @@
 
 yarnをinstallしていること
 
-パッケージインストール
-
 ```
-$ yarn
-```
-
-run app
-
-```
-$ yarn start
+$ yarn  //パッケージインストール
+$ yarn start // run app
 ```
