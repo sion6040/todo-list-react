@@ -5,11 +5,13 @@
 yarnをinstallしていること
 
 パッケージインストール
+
 ```
 $ yarn
 ```
 
-# run app
+run app
+
 ```
 $ yarn start
 ```
