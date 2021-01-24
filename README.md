@@ -2,7 +2,7 @@
 
 # 環境構築
 
-前提: brewでyarnをinstallしていること
+yarnをinstallしていること
 
 パッケージインストール
 ```
