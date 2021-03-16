@@ -9,10 +9,8 @@ export function App() {
   {id:2,task:"本を読む",type:"LEARN"},
   {id:3,task:"掃除をする",type:"OTHER"},
   ]);
-  const handleRemoveItem = (e:any)=> {
-    const name = e.target.getAttribute("key")
-    setTodolist(todolist.filter(todo => todo.id !== name));
-    console.log("aa");//ここでつんだ。
+  const handleRemoveItem = (e:number)=> {
+    setTodolist(todolist.filter(todo => todo.id !== e));
   };
   return (
     <div >
@@ -20,7 +18,7 @@ export function App() {
     {todolist.map((todo)=>(
       <div className="tasklist">
         <p>{todo.type}　{todo.task}</p>
-        <button onClick={handleRemoveItem} key={todo.id}>完了</button>
+        <button onClick={()=>handleRemoveItem(todo.id)} key={todo.id}>完了</button>
       </div>
     ))}
       </div>
