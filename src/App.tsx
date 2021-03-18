@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import {useState} from "react";
 //divタグをインラインにしているため、widthの指定ができずに、完了ﾎﾞﾀﾝがずれてしまう。
-let idnum:number=3; //length+1だとIdがかぶってしまって、識別方法が分からなかったため使用
+let idnum:number=3;
+let st:string="off";
 export function App() {
   const [todolist,setTodolist]=useState([
   {id:1,task:"書類を作る",type:"WORK"},
@@ -17,10 +18,22 @@ export function App() {
     setTodolist(todolist.concat({
       id:idnum,task:"NEW TASK",type:"WORK"
     }));
-  }
+  };
+  const onoff=()=>{
+    if(st=="off"){
+      st="on";
+    }else{
+      st="off";
+    }
+  };
   return (
     <div >
       <div className="body">
+      <div className="switch" >
+      <input type="checkbox" id="toggle" className="toggle" onClick={()=>onoff()}/>
+      {st}
+      <label htmlFor="toggle"></label>
+    </div>
     {todolist.map((todo)=>(
       <div className="tasklist">
         <div style={{margin:"10px",display:"inline"}}>{todo.type}</div>
