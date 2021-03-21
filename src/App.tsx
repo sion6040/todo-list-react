@@ -3,7 +3,7 @@ import './App.css';
 import { useState } from 'react';
 //divタグをインラインにしているため、widthの指定ができずに、完了ﾎﾞﾀﾝがずれてしまう。
 let idnum: number = 3;
-let st: string = 'off';
+//let st: string = 'off';
 export function App() {
   const [todolist, setTodolist] = useState<{ id: number; task: string; type: string }[]>([
     { id: 1, task: '書類を作る', type: 'WORK' },
@@ -13,7 +13,7 @@ export function App() {
   const handleRemoveItem = (e: number) => {
     setTodolist(todolist.filter((todo) => todo.id !== e));
   };
-
+  const [st, setSt] = useState(false);
   const createTask = () => {
     idnum++;
     setTodolist(
@@ -25,10 +25,10 @@ export function App() {
     );
   };
   const onoff = () => {
-    if (st == 'off') {
-      st = 'on';
+    if (st === false) {
+      setSt(true);
     } else {
-      st = 'off';
+      setSt(false);
     }
   };
   return (
@@ -36,7 +36,7 @@ export function App() {
       <div className="body">
         <div className="switch">
           <input type="checkbox" id="toggle" className="toggle" onClick={() => onoff()} />
-          {st}
+          {st ? 'on' : 'off'}
           <label htmlFor="toggle"></label>
         </div>
         {todolist.map((todo) => (
