@@ -3,12 +3,18 @@ import './App.css';
 import { useState } from 'react';
 //divタグをインラインにしているため、widthの指定ができずに、完了ﾎﾞﾀﾝがずれてしまう。
 let idnum: number = 3;
-//let st: string = 'off';
+
+const TASK_TYPE = {
+  WORK: 'WORK',
+  LEARN: 'LEARN',
+  OTHER: 'OTHER',
+};
+
 export function App() {
   const [todolist, setTodolist] = useState<{ id: number; task: string; type: string }[]>([
-    { id: 1, task: '書類を作る', type: 'WORK' },
-    { id: 2, task: '本を読む', type: 'LEARN' },
-    { id: 3, task: '掃除をする', type: 'OTHER' },
+    { id: 1, task: '書類を作る', type: TASK_TYPE.WORK },
+    { id: 2, task: '本を読む', type: TASK_TYPE.LEARN },
+    { id: 3, task: '掃除をする', type: TASK_TYPE.OTHER },
   ]);
   const handleRemoveItem = (e: number) => {
     setTodolist(todolist.filter((todo) => todo.id !== e));
@@ -20,7 +26,7 @@ export function App() {
       todolist.concat({
         id: idnum,
         task: 'NEW TASK',
-        type: 'WORK',
+        type: TASK_TYPE.WORK,
       }),
     );
   };
@@ -34,9 +40,9 @@ export function App() {
   const changeType = (event: React.ChangeEvent<HTMLSelectElement>, id: number) => {
     const newtodolist = todolist.map((todo) => {
       if (todo.id === id) {
-        return { id: todo.id, task: todo.task, type: event.target.value };
+        return { ...todo, type: event.target.value };
       } else {
-        return { id: todo.id, task: todo.task, type: todo.type };
+        return todo;
       }
     });
     setTodolist(newtodolist);
@@ -50,12 +56,14 @@ export function App() {
           <label htmlFor="toggle"></label>
         </div>
         {todolist.map((todo) => (
-          <div className="tasklist">
+          <div key={todo.id} className="tasklist">
             {st ? (
               <select value={todo.type} onChange={(event) => changeType(event, todo.id)}>
-                <option value="WORK">WORK</option>
-                <option value="LEARN">LEARN</option>
-                <option value="OTHER">OTHER</option>
+                {Object.values(TASK_TYPE).map((tasktype) => (
+                  <option key={tasktype} value={tasktype}>
+                    {tasktype}
+                  </option>
+                ))}
               </select>
             ) : (
               <div style={{ margin: '10px', display: 'inline' }}>{todo.type}</div>
