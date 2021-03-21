@@ -31,6 +31,16 @@ export function App() {
       setSt(false);
     }
   };
+  const changeType = (event: React.ChangeEvent<HTMLSelectElement>, id: number) => {
+    const newtodolist = todolist.map((todo) => {
+      if (todo.id === id) {
+        return { id: todo.id, task: todo.task, type: event.target.value };
+      } else {
+        return { id: todo.id, task: todo.task, type: todo.type };
+      }
+    });
+    setTodolist(newtodolist);
+  };
   return (
     <div>
       <div className="body">
@@ -41,7 +51,15 @@ export function App() {
         </div>
         {todolist.map((todo) => (
           <div className="tasklist">
-            <div style={{ margin: '10px', display: 'inline' }}>{todo.type}</div>
+            {st ? (
+              <select value={todo.type} onChange={(event) => changeType(event, todo.id)}>
+                <option value="WORK">WORK</option>
+                <option value="LEARN">LEARN</option>
+                <option value="OTHER">OTHER</option>
+              </select>
+            ) : (
+              <div style={{ margin: '10px', display: 'inline' }}>{todo.type}</div>
+            )}
             <div style={{ margin: '10px', display: 'inline' }}>{todo.task}</div>
             <div style={{ padding: '0 0 0 250px', display: 'inline' }}>
               <button style={{ width: '90px' }} onClick={() => handleRemoveItem(todo.id)} key={todo.id}>
