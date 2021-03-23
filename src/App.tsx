@@ -47,6 +47,16 @@ export function App() {
     });
     setTodolist(newtodolist);
   };
+  const changeTask = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
+    const newtodolist = todolist.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, task: event.target.value };
+      } else {
+        return todo;
+      }
+    });
+    setTodolist(newtodolist);
+  };
   return (
     <div>
       <div className="body">
@@ -68,7 +78,11 @@ export function App() {
             ) : (
               <div style={{ margin: '10px', display: 'inline' }}>{todo.type}</div>
             )}
+            {st?(
+              <input value={todo.task} onChange={(event) => changeTask(event, todo.id)}></input>
+            ):(
             <div style={{ margin: '10px', display: 'inline' }}>{todo.task}</div>
+            )}
             <div style={{ padding: '0 0 0 250px', display: 'inline' }}>
               <button style={{ width: '90px' }} onClick={() => handleRemoveItem(todo.id)} key={todo.id}>
                 完了
