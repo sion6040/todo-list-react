@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { useState } from 'react';
+import { flattenDiagnosticMessageText } from 'typescript';
 //divタグをインラインにしているため、widthの指定ができずに、完了ﾎﾞﾀﾝがずれてしまう。
 let idnum: number = 3;
 
@@ -66,9 +67,13 @@ export function App() {
           <label htmlFor="toggle"></label>
         </div>
         {todolist.map((todo) => (
-          <div key={todo.id} className="tasklist">
+          <div key={todo.id} className="tasklist" style={{ display: 'flex', justifyContent: 'space-around' }}>
             {st ? (
-              <select value={todo.type} onChange={(event) => changeType(event, todo.id)}>
+              <select
+                style={{ margin: '10px', height: '20px', display: 'inline-flex' }}
+                value={todo.type}
+                onChange={(event) => changeType(event, todo.id)}
+              >
                 {Object.values(TASK_TYPE).map((tasktype) => (
                   <option key={tasktype} value={tasktype}>
                     {tasktype}
@@ -76,15 +81,19 @@ export function App() {
                 ))}
               </select>
             ) : (
-              <div style={{ margin: '10px', display: 'inline' }}>{todo.type}</div>
+              <div style={{ margin: '10px', display: 'inline-flex' }}>{todo.type}</div>
             )}
-            {st?(
-              <input value={todo.task} onChange={(event) => changeTask(event, todo.id)}></input>
-            ):(
-            <div style={{ margin: '10px', display: 'inline' }}>{todo.task}</div>
+            {st ? (
+              <input
+                style={{ margin: '10px -30px 10px 10px', width: '150px', height: '15px', display: 'inline-flex' }}
+                value={todo.task}
+                onChange={(event) => changeTask(event, todo.id)}
+              ></input>
+            ) : (
+              <div style={{ margin: '10px 60px 10px 10px', display: 'inline' }}>{todo.task}</div>
             )}
-            <div style={{ padding: '0 0 0 250px', display: 'inline' }}>
-              <button style={{ width: '90px' }} onClick={() => handleRemoveItem(todo.id)} key={todo.id}>
+            <div style={{ padding: '0 0 0 55px', display: 'inline' }}>
+              <button className="donebutton" onClick={() => handleRemoveItem(todo.id)} key={todo.id}>
                 完了
               </button>
             </div>
