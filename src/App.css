@@ -9,15 +9,16 @@
   margin-left: -250px;
   margin-top: -100px;
 }
-.createTask{
+.createTask {
   text-align: center;
 }
 .tasklist {
-  background-color: #aaaaaa;
+  display: flex;
+  background: #ccc;
   padding: 20px 30px 20px 10px;
   border: 2px solid black;
   border-radius: 16px;
-  width:550px;
+  width: 550px;
   margin-bottom: 20px;
 }
 
@@ -58,10 +59,10 @@
 .switch {
   margin-top: 4px;
   margin-left: 2px;
-  font-size:24px;
+  font-size: 24px;
   padding: 2px;
 }
-.switch input[type=checkbox]{
+.switch input[type='checkbox'] {
   position: absolute;
   opacity: 0;
 }
@@ -81,26 +82,26 @@
   transition: background 0.1s ease;
   background: #f1f1f1;
   border-radius: 50px;
-  box-shadow: inset 0px 1px 1px rgba(171,66,63,0.5);
+  box-shadow: inset 0px 1px 1px rgba(171, 66, 63, 0.5);
 }
 .switch label:after {
-  content:'';
+  content: '';
   position: absolute;
   width: 1em;
   height: 1em;
   border-radius: 50px;
   left: 0;
-  transition : all 0.2s ease;
-  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
   background: #fcfff4;
-  animation: swich-off .2s ease-out;
-  z-index:2;
+  animation: swich-off 0.2s ease-out;
+  z-index: 2;
 }
-.switch input[type=checkbox]:checked+label:before {
-  background:#8ce196;
-  box-shadow: inset 0px 1px 1px rgba(84,152,140,0.5);
+.switch input[type='checkbox']:checked + label:before {
+  background: #8ce196;
+  box-shadow: inset 0px 1px 1px rgba(84, 152, 140, 0.5);
 }
-.switch input[type=checkbox]:checked+label:after {
-  animation: switch-on .2s ease-out;
+.switch input[type='checkbox']:checked + label:after {
+  animation: switch-on 0.2s ease-out;
   left: 1.1em;
 }

@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
 import { useState } from 'react';
-//divタグをインラインにしているため、widthの指定ができずに、完了ﾎﾞﾀﾝがずれてしまう。
+import styled from 'styled-components';
 let idnum: number = 3;
-
 const TASK_TYPE = {
   WORK: 'WORK',
   LEARN: 'LEARN',
@@ -11,15 +10,16 @@ const TASK_TYPE = {
 };
 
 export function App() {
+  const [idnum, setId] = useState(3);
   const [todolist, setTodolist] = useState<{ id: number; task: string; type: string }[]>([
     { id: 1, task: '書類を作る', type: TASK_TYPE.WORK },
     { id: 2, task: '本を読む', type: TASK_TYPE.LEARN },
     { id: 3, task: '掃除をする', type: TASK_TYPE.OTHER },
   ]);
-  const handleRemoveItem = (e: number) => {
-    setTodolist(todolist.filter((todo) => todo.id !== e));
+  const handleDone = (id: number) => {
+    setTodolist(todolist.filter((todo) => todo.id !== id));
   };
-  const [st, setSt] = useState(false);
+  const [Switch, setSwitch] = useState(false);
   const createTask = () => {
     idnum++;
     setTodolist(
@@ -31,10 +31,10 @@ export function App() {
     );
   };
   const onoff = () => {
-    if (st === false) {
-      setSt(true);
+    if (Switch === false) {
+      setSwitch(true);
     } else {
-      setSt(false);
+      setSwitch(false);
     }
   };
   const changeType = (event: React.ChangeEvent<HTMLSelectElement>, id: number) => {
@@ -59,43 +59,91 @@ export function App() {
   };
   return (
     <div>
-      <div className="body">
+      <Body>
         <div className="switch">
           <input type="checkbox" id="toggle" className="toggle" onClick={() => onoff()} />
-          {st ? 'on' : 'off'}
+          {Switch ? 'on' : 'off'}
           <label htmlFor="toggle"></label>
         </div>
         {todolist.map((todo) => (
-          <div key={todo.id} className="tasklist">
-            {st ? (
-              <select value={todo.type} onChange={(event) => changeType(event, todo.id)}>
+          <TaskList key={todo.id}>
+            {Switch ? (
+              <Select value={todo.type} onChange={(event) => changeType(event, todo.id)}>
                 {Object.values(TASK_TYPE).map((tasktype) => (
                   <option key={tasktype} value={tasktype}>
                     {tasktype}
                   </option>
                 ))}
-              </select>
+              </Select>
             ) : (
-              <div style={{ margin: '10px', display: 'inline' }}>{todo.type}</div>
+              <DivType>{todo.type}</DivType>
             )}
-            {st?(
-              <input value={todo.task} onChange={(event) => changeTask(event, todo.id)}></input>
-            ):(
-            <div style={{ margin: '10px', display: 'inline' }}>{todo.task}</div>
+            {Switch ? (
+              <Input value={todo.task} onChange={(event) => changeTask(event, todo.id)}></Input>
+            ) : (
+              <DivTask>{todo.task}</DivTask>
             )}
-            <div style={{ padding: '0 0 0 250px', display: 'inline' }}>
-              <button style={{ width: '90px' }} onClick={() => handleRemoveItem(todo.id)} key={todo.id}>
+            <DoneDiv>
+              <button className="done-button" onClick={() => handleDone(todo.id)} key={todo.id}>
                 完了
               </button>
-            </div>
-          </div>
+            </DoneDiv>
+          </TaskList>
         ))}
-        <div className="createTask">
-          <button style={{ width: '100px', height: '50px', marginBottom: '400px' }} onClick={() => createTask()}>
+        <CreateTask>
+          <button className="create-task" onClick={() => createTask()}>
             タスクを追加
           </button>
-        </div>
-      </div>
+        </CreateTask>
+      </Body>
     </div>
   );
 }
+const Body = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -100px 0 0 -250px;
+`;
+const TaskList = styled.div`
+  display: flex;
+  background: #ccc;
+  padding: 20px 30px 20px 10px;
+  border: 2px solid black;
+  border-radius: 16px;
+  width: 550px;
+  margin-bottom: 20px;
+`;
+const Input = styled.input`
+  width: 1100px;
+`;
+const DivTask = styled.div`
+  width: 1100px;
+`;
+const DoneDiv = styled.div`
+  width: 100%;
+  text-align: right;
+  .done-button {
+    width: 90px;
+  }
+`;
+const Select = styled.select`
+  width: 150px;
+  margin-right: 30px;
+  margin-left: 15px;
+  margin-top: 3px;
+`;
+const DivType = styled.div`
+  width: 150px;
+  margin-right: 30px;
+  margin-left: 15px;
+  margin-top: 3px;
+`;
+const CreateTask = styled.div`
+  align: center;
+  .create-task {
+    width: 120px;
+    height: 50px;
+    margin-bottom: 400px;
+  }
+`;
